@@ -3,10 +3,12 @@
 
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
 //function prototypes
 void showMenu();
 void showFees(double, int);
+int getIntegerInput();
 
 int main()
 {
@@ -31,13 +33,13 @@ int main()
 	{
 		// Display menu and get user's choice.
 		showMenu();
-		std::cin >> choice;
+		choice = getIntegerInput();
 		
 		// Validate the menu selection
 		while (choice < ADULT_CHOICE || choice > QUIT_CHOICE)
 		{
 			std::cout << "Please enter a valid menu choice: ";
-			std::cin >> choice; 
+			choice = getIntegerInput();
 		}
 		
 		// If the user does not want to quit, then proceed.
@@ -45,7 +47,7 @@ int main()
 		{
 			// Get the number of months.
 			std::cout << "For how many months? ";
-			std::cin >> months;
+			months = getIntegerInput();
 			
 			// Display the membership fees.
 			switch (choice)
@@ -63,6 +65,19 @@ int main()
 		}
 	  } while (choice != QUIT_CHOICE); 
 	return 0;
+}
+
+int getIntegerInput() {
+	int result;
+	while (true) {
+		if (std::cin >> result) {
+			break;
+		}
+  		std::cin.clear();
+  		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  		std::cout << "Expected an Integer, please try again: ";
+	}
+	return result;
 }
 
 //*****************************************************************
